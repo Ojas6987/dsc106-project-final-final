@@ -110,35 +110,31 @@ header {
 }
 
 #bar-chart2 {
-  position: absolute;
-  top: 350px; /* Adjust as needed */
-  left: 0;
+  position: absolute; /* Adjust as needed */
+  left: 800;
+  opacity: 0;
 }
 
 #bar-chart3 {
-  position: absolute;
-  top: 350px; /* Adjust as needed */
-  left: 0;
+  position: absolute;/* Adjust as needed */
+  left: 800;
+  opacity: 0;
 }
 
 
 
 #bar-chart {
-  position: absolute;
-  top: 350px; /* Adjust as needed */
-  left: 0;
+  position: absolute; /* Adjust as needed */
+  left: 800;
+  opacity: 0;
 }
 
 
 #image-container,
 #image-container1,
 #image-container2 {
-    width: 450px;
-    height: 450px;
-    justify-content: center; /* Align items horizontally */
-    align-items: center; /* Align items vertically */
-    display: flex;
-
+    width: 250px;
+    height: 250px;
 }
 
 
