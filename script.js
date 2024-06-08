@@ -547,40 +547,43 @@ svg.append("text")
     
 
 
-// // Load data from CSV
-d3.csv('housing.csv').then(function(data) {
-    // Compute average price per state
-    const avgPrices = d3.rollups(data, v => d3.mean(v, d => +d.price), d => d.state);
-    
+// Load data from CSV
+d3.csv('h_price.csv').then(function(data) {
+    // Parse the price as a number
+    data.forEach(d => d.price = +d.price);
+
     // Sort states by average price in descending order
-    avgPrices.sort((a, b) => b[1] - a[1]);
+    data.sort((a, b) => b.price - a.price);
     
     // Select top ten states
-    const topTenStates = avgPrices.slice(0, 10);
+    const topTenStates = data.slice(0, 10);
     
     // Create scales for the bar graph
     const xScale = d3.scaleBand()
-        .domain(topTenStates.map(d => d[0]))
+        .domain(topTenStates.map(d => d.state))
         .range([60, 400]) // Adjusted range to accommodate labels
         .padding(0.1);
     
     const yScale = d3.scaleLinear()
-        .domain([0, d3.max(topTenStates, d => d[1])])
+        .domain([0, d3.max(topTenStates, d => d.price)])
         .range([400, 40]); // Adjusted range to accommodate labels
     
     // Create SVG container for the bar graph
-    const svg = d3.select('#bar-chart').attr('transform','translate(200,-100)');
+    const svg = d3.select('#bar-chart')
+        .attr('width', 500)
+        .attr('height', 500)
+        .attr('transform','translate(200,-100)');
     
     // Create bars
-    const bars = svg.selectAll('.bar')
+    svg.selectAll('.bar')
         .data(topTenStates)
         .enter().append('rect')
         .attr('class', 'bar')
-        .attr('x', d => xScale(d[0]))
-        .attr('y', d => yScale(d[1]))
+        .attr('x', d => xScale(d.state))
+        .attr('y', d => yScale(d.price))
         .attr('width', xScale.bandwidth())
-        .attr('height', d => 400 - yScale(d[1]))
-        .attr('fill', 'steelblue');
+        .attr('height', d => 400 - yScale(d.price))
+        .attr('fill', d => d.state === 'California' ? 'red' : 'steelblue');
     
     // Add labels for states on x-axis
     svg.append('g')
@@ -603,7 +606,7 @@ d3.csv('housing.csv').then(function(data) {
     svg.append('text')
         .attr('class', 'x-axis-label')
         .attr('x', 230)
-        .attr('y', 440)
+        .attr('y', 460)
         .attr('text-anchor', 'middle')
         .text('State');
 
@@ -612,18 +615,12 @@ d3.csv('housing.csv').then(function(data) {
         .attr('class', 'y-axis-label')
         .attr('transform', 'rotate(-90)')
         .attr('x', -230)
-        .attr('y', 20)
+        .attr('y', 11)
         .attr('text-anchor', 'middle')
         .text('Average Housing Price');
-    
-    // Add labels for bars
-    bars.append('text')
-        .attr('class', 'bar-label')
-        .attr('x', d => xScale(d[0]) + xScale.bandwidth() / 2)
-        .attr('y', d => yScale(d[1]) - 5)
-        .attr('text-anchor', 'middle')
-        .text(d => d[1].toFixed(2)); // Display average price
 });
+
+
 
 
 
@@ -694,7 +691,7 @@ d3.csv('taxes.csv').then(function(data) {
         .attr('y', d => yScale(parseFloat(d.IncomeTaxRate)))
         .attr('width', xScale.bandwidth())
         .attr('height', d => 400 - yScale(parseFloat(d.IncomeTaxRate)))
-        .attr('fill', 'steelblue');
+        .attr('fill', d => d.State === 'California' ? 'red' : 'steelblue');
 
     // Add labels for states on x-axis
     svg.append('g')
@@ -717,7 +714,7 @@ d3.csv('taxes.csv').then(function(data) {
     svg.append('text')
         .attr('class', 'x-axis-label')
         .attr('x', 230)
-        .attr('y', 440)
+        .attr('y', 460)
         .attr('text-anchor', 'middle')
         .text('State');
 
@@ -812,7 +809,13 @@ d3.csv('job.csv').then(function(data) {
         .attr('y', d => yScale(parseFloat(d['Percent Job Growth'])))
         .attr('width', xScale.bandwidth())
         .attr('height', d => 400 - yScale(parseFloat(d['Percent Job Growth'])))
-        .attr('fill', 'steelblue');
+        .attr('fill', d => {
+            if (d.State === 'California') return 'red';
+            else if (d.State === 'Florida') return 'green';
+            else if (d.State === 'Texas') return 'orange';
+            else return 'steelblue';
+        });
+
 
     // Add labels for states on x-axis
     svg.append('g')
@@ -835,7 +838,7 @@ d3.csv('job.csv').then(function(data) {
     svg.append('text')
         .attr('class', 'x-axis-label')
         .attr('x', 230)
-        .attr('y', 440)
+        .attr('y', 465)
         .attr('text-anchor', 'middle')
         .text('State');
 
