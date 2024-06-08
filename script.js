@@ -522,17 +522,17 @@ svg.append("text")
         
     });
     const svgImageContainer = d3.select('#image-svg')
-        .attr('width', 450)
-        .attr('height', 450)
-        .style('transform', 'translate(15%)');
+        .attr('width', 250)
+        .attr('height', 250)
+        .attr('transform','translate(100,0)');
     
     
 
     // Add an image to the new SVG container
     svgImageContainer.append('image')
     .attr('xlink:href', 'house.jpg') // Replace with the path to your image
-    .attr('width', 450)
-    .attr('height', 450)
+    .attr('width', 250)
+    .attr('height', 250)
     // .attr('class', 'hover-image')
     .on('mouseover', function() {
         d3.select('#bar-chart').style('opacity', 1);
@@ -547,7 +547,7 @@ svg.append("text")
     
 
 
-// Load data from CSV
+// // Load data from CSV
 d3.csv('housing.csv').then(function(data) {
     // Compute average price per state
     const avgPrices = d3.rollups(data, v => d3.mean(v, d => +d.price), d => d.state);
@@ -569,7 +569,7 @@ d3.csv('housing.csv').then(function(data) {
         .range([400, 40]); // Adjusted range to accommodate labels
     
     // Create SVG container for the bar graph
-    const svg = d3.select('#bar-chart');
+    const svg = d3.select('#bar-chart').attr('transform','translate(200,-100)');
     
     // Create bars
     const bars = svg.selectAll('.bar')
@@ -643,16 +643,16 @@ d3.csv('housing.csv').then(function(data) {
 
 
     const svgImageContainer1 = d3.select('#svg-image-container1')
-        .attr('width', 450)
-        .attr('height', 450)
-        .style('transform', 'translate(115%, -100%)');
+        .attr('width', 250)
+        .attr('height', 250)
+        .attr('transform','translate(100,0)');
 
     // Add an image to the new SVG container
     svgImageContainer1.append('image')
         .attr('xlink:href', 'tax.jpg') // Replace with the path to your image
-        .attr('width', 450)
-        .attr('height', 350) // Set X position for centering
-        .attr('y', +50)
+        .attr('width', 250)
+        .attr('height', 250) // Set X position for centering
+        .attr('y', +1)
         
         .on('mouseover', function() {
             d3.select('#bar-chart2').style('opacity', 1);
@@ -683,7 +683,7 @@ d3.csv('taxes.csv').then(function(data) {
         .range([400, 40]); // Adjusted range to accommodate labels
 
     // Create SVG container for the bar graph
-    const svg = d3.select('#bar-chart2').attr('transform', 'translate(500, -450)');
+    const svg = d3.select('#bar-chart2').attr('transform','translate(200,-100)');
 
     // Create bars
     const bars = svg.selectAll('.bar')
@@ -763,15 +763,15 @@ d3.csv('taxes.csv').then(function(data) {
 
 
     const svgImageContainer2 = d3.select('#svg-image-container2')
-        .attr('width', 450)
-        .attr('height', 450)
-        .style('transform', 'translate(215%, -200%)');
+        .attr('width', 250)
+        .attr('height', 250)
+        .attr('transform','translate(100,0)');
 
     // Add an image to the third SVG container
     svgImageContainer2.append('image')
         .attr('xlink:href', 'job.jpg') // Replace with the path to your image
-        .attr('width', 450)
-        .attr('height', 450)
+        .attr('width', 250)
+        .attr('height', 250)
         .on('mouseover', function() {
             d3.select('#bar-chart3').style('opacity', 1);
             d3.select('#svg-image-container2').style('opacity', 0);
@@ -801,7 +801,7 @@ d3.csv('job.csv').then(function(data) {
         .range([400, 40]); // Adjusted range to accommodate labels
 
     // Create SVG container for the bar graph
-    const svg = d3.select('#bar-chart3').attr('transform', 'translate(990, -900)');
+    const svg = d3.select('#bar-chart3').attr('transform','translate(200,-100)');
 
     // Create bars
     const bars = svg.selectAll('.bar')
